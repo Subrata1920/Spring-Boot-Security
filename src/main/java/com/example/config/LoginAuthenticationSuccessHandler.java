@@ -25,19 +25,13 @@ public class LoginAuthenticationSuccessHandler implements AuthenticationSuccessH
 		
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		authorities.forEach(authority -> {
-			if(authority.getAuthority().equals("ROLE_DB") || authority.getAuthority().equals("ROLE_ADMIN")) {
+			if(authority.getAuthority().equals("Role_DB") || authority.getAuthority().equals("Role_ADMIN")) {
 				try {
 					redirectStrategy.sendRedirect(request, response, "/success");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} /*else if(authority.getAuthority().equals("ROLE_ADMIN")) {
-				try {
-					redirectStrategy.sendRedirect(request, response, "/success");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}*/ else {
+			} else {
 	            throw new IllegalStateException();
 	        }
 		});

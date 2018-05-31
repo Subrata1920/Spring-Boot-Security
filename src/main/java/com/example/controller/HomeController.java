@@ -5,20 +5,20 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.service.TestService;
+import com.example.service.CollectUserService;
 
 @Controller
 public class HomeController {
 	
 	@Autowired
-	private TestService testService;
+	private CollectUserService testService;
 	
 	@GetMapping(value={"/home","/", "/login"})
 	public String home(){
 		return "login";
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAuthority('Role_ADMIN')")
 	@GetMapping(value="/secure")
 	public String secure(){
 		return "secure";
