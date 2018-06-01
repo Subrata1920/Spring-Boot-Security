@@ -4,7 +4,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import com.example.domain.Role;
+import com.example.domain.UserAreaMapping;
 
 
 public class CollectUserModel extends User{
@@ -16,7 +16,7 @@ public class CollectUserModel extends User{
 
 	private Integer userId;
 	
-	private Collection<Role> role;
+	private Collection<UserAreaMapping> userAreaMapping;
 	private CollectUserModel(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,
 			Collection<? extends GrantedAuthority> authorities) {
@@ -27,12 +27,12 @@ public class CollectUserModel extends User{
 	
 	public CollectUserModel(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,
-			Collection<? extends GrantedAuthority> authorities,Integer userId,Collection<Role> role) {
+			Collection<? extends GrantedAuthority> authorities,Integer userId,Collection<UserAreaMapping> userAreaMapping) {
 		
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		
 		this.userId=userId;
-		this.role=role;
+		this.userAreaMapping=userAreaMapping;
 		
 	}
 
@@ -44,12 +44,14 @@ public class CollectUserModel extends User{
 		this.userId = userId;
 	}
 
-	public Collection<Role> getRole() {
-		return role;
+
+	public Collection<UserAreaMapping> getUserAreaMapping() {
+		return userAreaMapping;
 	}
 
-	public void setRole(Collection<Role> role) {
-		this.role = role;
+
+	public void setUserAreaMapping(Collection<UserAreaMapping> userAreaMapping) {
+		this.userAreaMapping = userAreaMapping;
 	}
-	
+
 }

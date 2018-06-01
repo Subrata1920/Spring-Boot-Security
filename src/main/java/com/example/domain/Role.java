@@ -2,32 +2,39 @@ package com.example.domain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
+/**
+ * 
+ * @author subrata
+ *
+ */
 @Entity
+@Table(name="mst_role")
 public class Role implements Serializable{
 
 	private static final long serialVersionUID = -5837347135467909989L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "role_id")
+	@Column(name = "role_id_pk")
 	private Integer roleId;
 
-	@Column(name = "role_code")
+	@Column(name = "role_code",length = 60)
 	private String roleCode;
 
-	@Column(name = "role_name")
+	@Column(name = "role_name",length = 60)
 	private String roleName;
 
 	@Column(name = "description")
@@ -38,19 +45,19 @@ public class Role implements Serializable{
 	private Timestamp createdDate;
 
 	@Column(name = "last_updated_date")
-	@UpdateTimestamp
+	@CreationTimestamp
 	private Timestamp lastUpdatedDate;
 	
-	@ManyToOne
-	@JoinColumn(name="user_id_fk")
-	private CollectUser user;
+	@OneToMany(mappedBy = "role", fetch=FetchType.LAZY)
+	private List<RoleFeaturePermissionScheme> roleFeaturePermissionSchemes;
 
-	public Role() {
-		super();
-	}
-
+	
 	public Integer getRoleId() {
 		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getRoleCode() {
@@ -93,19 +100,13 @@ public class Role implements Serializable{
 		this.lastUpdatedDate = lastUpdatedDate;
 	}
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
+	public List<RoleFeaturePermissionScheme> getRoleFeaturePermissionSchemes() {
+		return roleFeaturePermissionSchemes;
 	}
 
-	public Role(int roleId) {
-		this.roleId=roleId;
+	public void setRoleFeaturePermissionSchemes(
+			List<RoleFeaturePermissionScheme> roleFeaturePermissionSchemes) {
+		this.roleFeaturePermissionSchemes = roleFeaturePermissionSchemes;
 	}
 
-	public CollectUser getUser() {
-		return user;
-	}
-
-	public void setUser(CollectUser user) {
-		this.user = user;
-	}
 }
