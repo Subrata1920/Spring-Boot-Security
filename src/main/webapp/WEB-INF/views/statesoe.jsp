@@ -2,6 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-Success page
+state soe home page
 
 <a href="<c:url value="/logout" />">Logout</a>

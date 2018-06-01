@@ -20,17 +20,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	private LoginAuthenticationSuccessHandler successHandler;
 	
 	@Autowired
+	private CustomAuthenticationProvider customAuthenticationProvider;
+	
+	@Autowired
 	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("subrata").password("subrata").roles("ADMIN");
-		auth.inMemoryAuthentication().withUser("root").password("root").roles("DB");
+		auth.authenticationProvider(customAuthenticationProvider);
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		 http.authorizeRequests()
 	        .antMatchers("/", "/home","/login").permitAll()
-//	        .antMatchers("/secure").access("hasRole('ADMIN')")
-//	        .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
 	        .and().formLogin().loginPage("/login").successHandler(successHandler)
 	        .usernameParameter("ssoId").passwordParameter("password")
 	        .and().csrf().disable()
