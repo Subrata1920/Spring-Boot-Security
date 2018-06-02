@@ -6,6 +6,11 @@ import org.springframework.data.repository.RepositoryDefinition;
 
 import com.example.domain.Role;
 
+/**
+ * 
+ * @author subrata
+ *
+ */
 @RepositoryDefinition(domainClass=Role.class, idClass=Integer.class)
 public interface RoleRepository {
 	

@@ -13,6 +13,11 @@ import org.springframework.stereotype.Component;
 
 import com.example.service.CustomUserDetailsService;
 
+/**
+ * 
+ * @author subrata
+ *
+ */
 @Component
 public class CustomAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider{
 	
