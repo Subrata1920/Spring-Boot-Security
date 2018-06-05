@@ -6,12 +6,16 @@ import org.springframework.stereotype.Service;
 import com.example.domain.CollectUser;
 import com.example.repository.CollectUserRepository;
 
+/**
+ * 
+ * @author subrata
+ *
+ */
 @Service
 public class CollectUserServiceImpl implements CollectUserService {
 	
 	@Autowired
 	private CollectUserRepository collectUserRepository;
-	
 
 	@Override
 	public CollectUser findByUserName(String userName) {

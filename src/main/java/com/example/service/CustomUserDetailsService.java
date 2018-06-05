@@ -18,6 +18,11 @@ import com.example.domain.UserAreaMapping;
 import com.example.domain.UserRoleFeaturePermissionMapping;
 import com.example.model.CollectUserModel;
 
+/**
+ * 
+ * @author subrata
+ *
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 	

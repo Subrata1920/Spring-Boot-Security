@@ -6,12 +6,13 @@ import org.springframework.security.core.userdetails.User;
 
 import com.example.domain.UserAreaMapping;
 
-
+/**
+ * 
+ * @author subrata
+ *
+ */
 public class CollectUserModel extends User{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4431662893129587625L;
 
 	private Integer userId;
