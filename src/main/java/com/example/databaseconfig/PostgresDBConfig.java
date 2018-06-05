@@ -27,9 +27,9 @@ import com.atomikos.jdbc.AtomikosDataSourceBean;
 @EnableJpaRepositories(
     basePackages = "com.example.repository", 
     entityManagerFactoryRef = "postgresEntityManagerFactory",  
-    transactionManagerRef = "postgresTransactionManager"
+    transactionManagerRef = "transactionManager"
 )
-@DependsOn("postgresTransactionManager")
+@DependsOn("transactionManager")
 public class PostgresDBConfig {
 	
 	@Autowired
@@ -55,11 +55,13 @@ public class PostgresDBConfig {
 	
 	@Bean(name = "postgresEntityManagerFactory")
 	@Primary
-	public LocalContainerEntityManagerFactoryBean postgresEntityManager() throws Throwable {
+	public LocalContainerEntityManagerFactoryBean postgresEntityManager() {
 
-		HashMap<String, Object> properties = new HashMap<String, Object>();
+		HashMap<String, Object> properties = new HashMap<>();
 		properties.put("hibernate.transaction.jta.platform", AtomikosJtaPlatform.class.getName());
 		properties.put("javax.persistence.transactionType", "JTA");
+		properties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.postgresql.jpa.hibernate.ddl-auto"));
+		properties.put("hibernate.dialect",	env.getProperty("spring.postgresql.jpa.properties.hibernate.dialect"));
 
 		LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
 		entityManager.setJtaDataSource(postgresDataSource());
@@ -69,46 +71,5 @@ public class PostgresDBConfig {
 		entityManager.setJpaPropertyMap(properties);
 		return entityManager;
 	}
-	
-	/*@Primary
-	@Bean
-	public LocalContainerEntityManagerFactoryBean postgresEntityManagerFactory() {
-		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-		em.setDataSource(postgresDataSource());
-		em.setPackagesToScan(new String[] { "com.example.domain" });
-
-		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-		hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
-		hibernateJpaVendorAdapter.setShowSql(true);
-		hibernateJpaVendorAdapter.setGenerateDdl(true);
-		em.setJpaVendorAdapter(hibernateJpaVendorAdapter);
-		HashMap<String, Object> properties = new HashMap<>();
-		properties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.postgresql.jpa.hibernate.ddl-auto"));
-		properties.put("hibernate.dialect",	env.getProperty("spring.postgresql.jpa.properties.hibernate.dialect"));
-		em.setJpaPropertyMap(properties);
-
-		return em;
-	}
-
-	@Primary
-	@Bean
-	public DataSource postgresDataSource() {
-
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName(env.getProperty("spring.postgresql.datasource.driver-class-name"));
-		dataSource.setUrl(env.getProperty("spring.postgresql.datasource.url"));
-		dataSource.setUsername(env.getProperty("spring.postgresql.datasource.username"));
-		dataSource.setPassword(env.getProperty("spring.postgresql.datasource.password"));
-
-		return dataSource;
-	}
-
-	@Primary
-	@Bean(name="postgresTransactionManager")
-	public JpaTransactionManager postgresTransactionManager() {
-		JpaTransactionManager transactionManager = new JpaTransactionManager();
-		transactionManager.setEntityManagerFactory(postgresEntityManagerFactory().getObject());
-		return transactionManager;
-	}*/
 	
 }
