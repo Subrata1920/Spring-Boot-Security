@@ -17,7 +17,7 @@ import com.example.service.CollectUserService;
 public class HomeController {
 	
 	@Autowired
-	private CollectUserService testService;
+	private CollectUserService collectUserService;
 	
 	@GetMapping(value={"/", "/login"})
 	public String home(){
@@ -62,5 +62,11 @@ public class HomeController {
 	public String accessDenied(){
 		return "Access_Denied";
 	}
+	
+	@GetMapping(value={"/save"})
+	public void save(){
+		collectUserService.save();
+	}
+	
 
 }
